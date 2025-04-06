@@ -4,7 +4,7 @@
 A web application that combines mental health assessment tools with real-time chat functionality between users and psychiatrists. The application allows users to take mental health assessments and connect with registered psychiatrists for professional guidance.
 
 
-# Mental Health Prediction Project
+# NeuroScore AI-Powered-Mental-Health-Assessment-Prediction
 
 ## Overview
 This project aims to predict depression severity based on various mental health assessment data using machine learning techniques. The project consists of several components, including a Python script for prediction, a dataset containing mental health data, and a Jupyter notebook for exploratory data analysis and model training.
