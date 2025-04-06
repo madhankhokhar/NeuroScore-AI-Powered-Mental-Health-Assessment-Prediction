@@ -1,4 +1,4 @@
-# Mental Health Prediction Project
+# NeuroScore AI-Powered-Mental-Health-Assessment-Prediction
 
 ## Overview
 A web application that combines mental health assessment tools with real-time chat functionality between users and psychiatrists. The application allows users to take mental health assessments and connect with registered psychiatrists for professional guidance.
@@ -30,7 +30,6 @@ This project aims to predict depression severity based on various mental health 
 The dataset used for training the machine learning model can be found at:
 [Depression and Anxiety Data](https://www.kaggle.com/datasets/shahzadahmad0402/depression-and-anxiety-data)
 
-For JS logic https://www.youtube.com/watch?v=whEObh8waxg&t=907s this old video really refershes memory 
 
 ## Installation
 To set up the project, follow these steps:
@@ -51,11 +50,6 @@ To set up the project, follow these steps:
 ## Usage
 0. **Create a virtual environment:**
  ```bash
-   # On Windows
-   python -m venv venv
-   .\venv\Scripts\activate
-
-   # On macOS/Linux
    python3 -m venv venv
    source venv/bin/activate
    ```
