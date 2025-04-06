@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mental Health Prediction</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  <style>
+    body {
+      background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .form-container, .chat-container {
+      flex: 1 1 450px;
+      background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      padding: 24px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      margin-bottom: 24px;
+      font-size: 24px;
+      color: #3F51B5;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    a.link {
+      display: inline-block;
+      margin-top: 6px;
+      color: #3F51B5;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    a.link:hover {
+      text-decoration: underline;
+    }
+
+    button {
+      background-color: #3F51B5;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #303F9F;
+    }
+
+    .chat-section {
+      margin-top: 24px;
+    }
+
+    .message {
+      background-color: #e9f0ff;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .message strong {
+      color: #3F51B5;
+    }
+
+    .message small {
+      color: #777;
+      margin-left: 10px;
+      font-size: 12px;
+    }
+
+    textarea {
+      height: 100px;
+      resize: vertical;
+    }
+
+    .chat-button {
+      color: #3F51B5;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <header style="text-align: center;">
+    <h1 style="color: #4e54c8;">Mental Health Prediction</h1>
+</header>
+  <div class="container">
+    {% if user.role == 'tester' %}
+    <div class="form-container">
+      <h2>Mental Health Assessment</h2>
+      <form action="/predict" method="post">
+        <div class="form-group">
+          <label for="age">Age:</label>
+          <input type="number" name="age" required>
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Gender:</label>
+          <select name="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="bmi">BMI:</label>
+          <input type="number" step="0.1" name="bmi" required>
+          <a href="/bmi_calculator" target="_blank" class="link">Calculate your BMI here</a>
+        </div>
+
+        <div class="form-group">
+          <label for="phq_score">PHQ Score:</label>
+          <input type="number" name="phq_score" required>
+          <a href="/phq_score" target="_blank" class="link">Calculate your PHQ score here</a>
+        </div>
+
+        <div class="form-group">
+          <label for="anxiety_severity">Anxiety Severity:</label>
+          <select name="anxiety_severity" required>
+            <option value="0">0 - None</option>
+            <option value="1">1 - None-minimal</option>
+            <option value="2">2 - Mild</option>
+            <option value="3">3 - Moderate</option>
+            <option value="4">4 - Severe</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="epworth_score">Epworth Score:</label>
+          <input type="number" name="epworth_score" required>
+          <a href="/epworth_score" target="_blank" class="link">Calculate your Epworth score here</a>
+        </div>
+
+        <div class="form-group">
+          <label for="gad_score">GAD Score:</label>
+          <input type="number" name="gad_score" required>
+          <a href="/gad_score" target="_blank" class="link">Calculate your GAD score here</a>
+        </div>
+
+        <button type="submit">Predict</button>
+      </form>
+    </div>
+
+    <div class="chat-section">
+        <h2>Chat with Psychiatrists</h2>
+        <div style="background-color: #e8f5e9; border-left: 6px solid #edeef2; padding: 16px; border-radius: 10px; margin-bottom: 20px;">
+            <p style="margin: 0; font-size: 16px;">
+                💬 <strong>Please</strong> 
+                <a href="{{ url_for('psychiatrists') }}" 
+                    style="background-color: #3F51B5; color: #ffffff; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; display: inline-block;">
+                    Select a Psychiatrist
+                </a>
+                to start chatting.
+            </p>
+        </div>
+        {% if psychiatrist_id %}
+            <div id="chat-messages">
+                {% for message in messages %}
+                    <div class="message">
+                        <strong>{{ message.sender.username }}:</strong> {{ message.content }}
+                        <small>({{ message.timestamp.strftime('%Y-%m-%d %H:%M:%S') }})</small>
+                    </div>
+                {% endfor %}
+            </div>
+            <form id="message-form">
+                <textarea id="message" required placeholder="Type your message here..."></textarea>
+                <button type="submit">Send</button>
+            </form>
+        {% endif %}
+    </div>
+    
+    {% elif user.role == 'psychiatrist' %}
+    <div class="chat-container">
+      <h2>Your Messages</h2>
+      <div id="chat-messages">
+        {% for message in messages %}
+        <div class="message">
+          <strong>{{ message.sender.username }}:</strong> {{ message.content }}
+          <small>({{ message.timestamp.strftime('%Y-%m-%d %H:%M:%S') }})</small>
+        </div>
+        {% endfor %}
+      </div>
+
+      <form id="message-form">
+        <textarea id="message" required placeholder="Type your message here..."></textarea>
+        <input type="hidden" id="current-user-id" value="{{ user.id }}">
+        <button type="submit">Send</button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+
+  <script>
+    const socket = io();
+    const psychiatristId = "{{ psychiatrist_id }}";
+    const currentUserId = "{{ user.id }}";
+    const ispsychiatrist = "{{ user.role }}" === "psychiatrist";
+
+    if (psychiatristId) {
+      socket.emit('join', { psychiatrist_id: parseInt(psychiatristId) });
+    }
+
+    socket.on('message', function (data) {
+      const messagesDiv = document.getElementById('chat-messages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message';
+      messageDiv.innerHTML = `<strong>${data.sender}:</strong> ${data.message} <small>(${data.timestamp})</small>`;
+      messagesDiv.appendChild(messageDiv);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    });
+
+    document.getElementById('message-form').onsubmit = function (e) {
+      e.preventDefault();
+      const messageInput = document.getElementById('message');
+      const message = messageInput.value;
+
+      if (message.trim()) {
+        const messageData = {
+          message: message,
+          psychiatrist_id: ispsychiatrist ? currentUserId : parseInt(psychiatristId)
+        };
+        socket.emit('message', messageData);
+        messageInput.value = '';
+      }
+    };
+  </script>
+</body>
+</html>

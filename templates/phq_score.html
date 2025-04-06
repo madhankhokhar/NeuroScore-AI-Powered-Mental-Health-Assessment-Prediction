@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHQ Score Calculation</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .header {
+            
+            color: #4e54c8;
+            padding: 30px;
+            width: 100%;
+            text-align: center;
+            
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.2rem;
+        }
+
+        .container {
+            background-color: #ffffff;
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        select {
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e0;
+            font-size: 1rem;
+            background-color: #edf2f7;
+            transition: border-color 0.3s ease;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #3182ce;
+            background-color: #e2e8f0;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            background-color: #4e54c8;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2c5282;
+        }
+
+        .nav-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .nav-links a {
+            color: #2b6cb0;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>PHQ Score Calculation</h1>
+    </div>
+    
+    <div class="container">
+        <div class="form-container">
+            <form action="/calculate_phq" method="post">
+                <div class="form-group">
+                    <label for="phq_1">Little interest or pleasure in doing things?</label>
+                    <select name="phq_1" required>
+                        <option value="Not at all">Not at all</option>
+                        <option value="Several days">Several days</option>
+                        <option value="More than half the days">More than half the days</option>
+                        <option value="Nearly every day">Nearly every day</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="phq_2">Feeling down, depressed, or hopeless?</label>
+                    <select name="phq_2" required>
+                        <option value="Not at all">Not at all</option>
+                        <option value="Several days">Several days</option>
+                        <option value="More than half the days">More than half the days</option>
+                        <option value="Nearly every day">Nearly every day</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="phq_3">Trouble falling or staying asleep, or sleeping too much?</label>
+                    <select name="phq_3" required>
+                        <option value="Not at all">Not at all</option>
+                        <option value="Several days">Several days</option>
+                        <option value="More than half the days">More than half the days</option>
+                        <option value="Nearly every day">Nearly every day</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="phq_4">Feeling tired or having little energy?</label>
+                    <select name="phq_4" required>
+                        <option value="Not at all">Not at all</option>
+                        <option value="Several days">Several days</option>
+                        <option value="More than half the days">More than half the days</option>
+                        <option value="Nearly every day">Nearly every day</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="phq_5">Poor appetite or overeating?</label>
+                    <select name="phq_5" required>
+                        <option value="Not at all">Not at all</option>
+                        <option value="Several days">Several days</option>
+                        <option value="More than half the days">More than half the days</option>
+                        <option value="Nearly every day">Nearly every day</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="phq_6">Feeling bad about yourself — or that you are a failure or have let yourself or your family down?</label>
+                    <select name="phq_6" required>
+                        <option value="Not at all">Not at all</option>
+                        <option value="Several days">Several days</option>
+                        <option value="More than half the days">More than half the days</option>
+                        <option value="Nearly every day">Nearly every day</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="phq_7">Trouble concentrating on things, such as reading the newspaper or watching television?</label>
+                    <select name="phq_7" required>
+                        <option value="Not at all">Not at all</option>
+                        <option value="Several days">Several days</option>
+                        <option value="More than half the days">More than half the days</option>
+                        <option value="Nearly every day">Nearly every day</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="phq_8">Moving or speaking so slowly that other people could have noticed? Or so fidgety or restless that you have been moving a lot more than usual?</label>
+                    <select name="phq_8" required>
+                        <option value="Not at all">Not at all</option>
+                        <option value="Several days">Several days</option>
+                        <option value="More than half the days">More than half the days</option>
+                        <option value="Nearly every day">Nearly every day</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="phq_9">Thoughts that you would be better off dead, or thoughts of hurting yourself in some way?</label>
+                    <select name="phq_9" required>
+                        <option value="Not at all">Not at all</option>
+                        <option value="Several days">Several days</option>
+                        <option value="More than half the days">More than half the days</option>
+                        <option value="Nearly every day">Nearly every day</option>
+                    </select>
+                </div>
+
+                <button type="submit">Calculate PHQ Score</button>
+            </form>
+            
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}" class="nav-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

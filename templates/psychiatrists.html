@@ -1,0 +1,48 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Psychiatrists</title>
+    <style>
+        h1 {
+            text-align: center;
+            color: #4e54c8;
+        }
+        .psychiatrist-card {
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .chat-button {
+            background-color: #3F51B5;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .chat-button:hover {
+            background-color: #303F9F;
+        }
+    </style>
+</head>
+<body>
+    <h1>Available Psychiatrists</h1>
+    <div class="psychiatrist-list">
+        {% for psychiatrist in psychiatrists %}
+            <div class="psychiatrist-card">
+                <h3>{{ psychiatrist.username }}</h3>
+                {% if psychiatrist.bio %}
+                    <p>{{ psychiatrist.bio }}</p>
+                {% endif %}
+                <a href="{{ url_for('chat', psychiatrist_id=psychiatrist.id) }}" class="chat-button">Chat with {{ psychiatrist.username }}</a>
+            </div>
+        {% endfor %}
+    </div>
+    <p><a href="{{ url_for('home') }}" class="nav-link">← Back to Home</a></p>
+</body>
+</html>

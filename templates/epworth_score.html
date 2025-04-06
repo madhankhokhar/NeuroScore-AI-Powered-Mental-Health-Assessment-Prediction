@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epworth Score Calculation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+            color: #333;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #4e54c8;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container {
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.6rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            background-color: #f8f9ff;
+            transition: 0.3s ease;
+        }
+
+        select:focus {
+            border-color: #4e54c8;
+            outline: none;
+            box-shadow: 0 0 6px rgba(78, 84, 200, 0.3);
+        }
+
+        button[type="submit"] {
+            background-color: #4e54c8;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3d41a1;
+        }
+
+        .nav-links {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .nav-links a {
+            color: #4e54c8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Epworth Sleepiness Scale</h1>
+    </div>
+    
+    <div class="container">
+        <div class="form-container">
+            <form action="/calculate_epworth" method="post">
+                <div class="form-group">
+                    <label for="epworth_1">Sitting and reading:</label>
+                    <select name="epworth_1" required>
+                        <option value="0">No chance of dozing (0 points)</option>
+                        <option value="1">Slight chance of dozing (1 point)</option>
+                        <option value="2">Moderate chance of dozing (2 points)</option>
+                        <option value="3">High chance of dozing (3 points)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="epworth_2">Watching television:</label>
+                    <select name="epworth_2" required>
+                        <option value="0">No chance of dozing (0 points)</option>
+                        <option value="1">Slight chance of dozing (1 point)</option>
+                        <option value="2">Moderate chance of dozing (2 points)</option>
+                        <option value="3">High chance of dozing (3 points)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="epworth_3">Sitting inactive in a public place:</label>
+                    <select name="epworth_3" required>
+                        <option value="0">No chance of dozing (0 points)</option>
+                        <option value="1">Slight chance of dozing (1 point)</option>
+                        <option value="2">Moderate chance of dozing (2 points)</option>
+                        <option value="3">High chance of dozing (3 points)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="epworth_4">Sitting for an hour as a passenger in a car:</label>
+                    <select name="epworth_4" required>
+                        <option value="0">No chance of dozing (0 points)</option>
+                        <option value="1">Slight chance of dozing (1 point)</option>
+                        <option value="2">Moderate chance of dozing (2 points)</option>
+                        <option value="3">High chance of dozing (3 points)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="epworth_5">Lying down in the afternoon to rest:</label>
+                    <select name="epworth_5" required>
+                        <option value="0">No chance of dozing (0 points)</option>
+                        <option value="1">Slight chance of dozing (1 point)</option>
+                        <option value="2">Moderate chance of dozing (2 points)</option>
+                        <option value="3">High chance of dozing (3 points)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="epworth_6">Sitting and talking to another person:</label>
+                    <select name="epworth_6" required>
+                        <option value="0">No chance of dozing (0 points)</option>
+                        <option value="1">Slight chance of dozing (1 point)</option>
+                        <option value="2">Moderate chance of dozing (2 points)</option>
+                        <option value="3">High chance of dozing (3 points)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="epworth_7">Sitting quietly after lunch (no alcohol):</label>
+                    <select name="epworth_7" required>
+                        <option value="0">No chance of dozing (0 points)</option>
+                        <option value="1">Slight chance of dozing (1 point)</option>
+                        <option value="2">Moderate chance of dozing (2 points)</option>
+                        <option value="3">High chance of dozing (3 points)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="epworth_8">Sitting in a car, stopped in traffic:</label>
+                    <select name="epworth_8" required>
+                        <option value="0">No chance of dozing (0 points)</option>
+                        <option value="1">Slight chance of dozing (1 point)</option>
+                        <option value="2">Moderate chance of dozing (2 points)</option>
+                        <option value="3">High chance of dozing (3 points)</option>
+                    </select>
+                </div>
+
+                <button type="submit">Calculate Epworth Score</button>
+            </form>
+            
+            <div class="nav-links">
+                <p><a href="{{ url_for('home') }}">← Back to Home</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

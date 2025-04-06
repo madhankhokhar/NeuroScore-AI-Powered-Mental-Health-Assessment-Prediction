@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+
+    <style>
+        * {
+            margin: 5px;
+            padding: 5px;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+            color: #333;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #4e54c8;
+        }
+
+        /* Main container */
+        .main-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .form-section {
+            background-color: #ffffff;
+            padding: 2rem 3rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        /* Form Styles */
+        .bmi-form .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .bmi-form label {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .bmi-form input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            transition: 0.3s ease;
+        }
+
+        .bmi-form input:focus {
+            border-color: #4e54c8;
+            outline: none;
+            box-shadow: 0 0 5px rgba(78, 84, 200, 0.3);
+        }
+
+        .button-group {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .button-group button {
+            background-color: #4e54c8;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .button-group button:hover {
+            background-color: #3d41a1;
+        }
+
+        /* Navigation */
+        .navigation {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #4e54c8;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>BMI Calculator</h1>
+    </header>
+
+    <main class="main-container">
+        <section class="form-section">
+            <form action="/calculate_bmi" method="post" class="bmi-form">
+                <div class="input-group">
+                    <label for="weight">Weight (kg)</label>
+                    <input type="number" step="0.1" name="weight" id="weight" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="height">Height (m)</label>
+                    <input type="number" step="0.01" name="height" id="height" required>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit">Calculate BMI</button>
+                </div>
+            </form>
+
+            <div class="navigation">
+                <a href="{{ url_for('home') }}" class="nav-link">← Back to Home</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
